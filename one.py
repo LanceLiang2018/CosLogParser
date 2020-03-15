@@ -19,6 +19,9 @@ with open('%s.txt' % time.asctime().replace(' ', '_').replace(':', '_'), 'w', en
             pli = p.readlines()
             for pi in pli:
                 result = re.findall("\"GET /.+HTTP/1.1\"", pi)
+                status = 'OK'
+                if 'AccessDenied' in pi:
+                    status = 'AccessDenied'
                 if len(result) == 0:
                     continue
                 r = result[0][6:-10]
@@ -32,7 +35,7 @@ with open('%s.txt' % time.asctime().replace(' ', '_').replace(':', '_'), 'w', en
                     # 异常请求
                     continue
                 # 正常请求
-                tmp.write('[%s] %s\n' % (file_type, urllib.parse.unquote(r)[:-len(file_type)-1]))
+                tmp.write('[%s][%s] %s\n' % (status, file_type, urllib.parse.unquote(r)[:-len(file_type)-1]))
 
             if len(tmp.getvalue()) == 0:
                 continue
