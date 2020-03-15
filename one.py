@@ -32,7 +32,7 @@ with open('%s.txt' % time.asctime().replace(' ', '_').replace(':', '_'), 'w', en
                     # 异常请求
                     continue
                 # 正常请求
-                tmp.write('[%s] %s\n' % (file_type, urllib.parse.unquote(r)[:-5]))
+                tmp.write('[%s] %s\n' % (file_type, urllib.parse.unquote(r)[:-len(file_type)-1]))
 
             if len(tmp.getvalue()) == 0:
                 continue
